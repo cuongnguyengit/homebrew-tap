@@ -1,17 +1,17 @@
 class CcAuto < Formula
   desc "Multi-account manager and quota router for Claude Code"
   homepage "https://github.com/cuongnguyengit/cc-auto-apt"
-  version "1.3.0"
+  version "1.3.1"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.0/cc-auto-macos-1.3.0-arm64.tar.gz"
-      sha256 "64cedab517b5b6b1a3387e4a3a983ab0d70c2f4e7e0aa248e5b2cffac457dc6e"
+      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.1/cc-auto-macos-1.3.1-arm64.tar.gz"
+      sha256 "b4b1aea55602ef7fbaa99bc27319a239bafd5f64c39b4f8464ea3df68e81524c"
     end
     on_intel do
-      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.0/cc-auto-macos-1.3.0-amd64.tar.gz"
-      sha256 "6a8079e6987dc4bf4a1fa6ed93fa64071382666359824521c4c2a25a8b733e6e"
+      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.1/cc-auto-macos-1.3.1-amd64.tar.gz"
+      sha256 "f1fcf1cbb0f1e2683743edf4a29ee935ff76079a73b9cb5e19c6114f885a72f7"
     end
   end
 
@@ -46,5 +46,9 @@ class CcAuto < Formula
            "--source", opt_libexec, "--no-service", "--no-vscode"
     assert_path_exists testpath/"home/.config/claude-accounts/accounts.sh"
     assert_equal version.to_s, shell_output("#{testpath}/home/.local/bin/cc-auto --version").strip
+    ENV["CLAUDE_ACCOUNTS_ROOT"] = (testpath/"home/.claude-accounts").to_s
+    output = shell_output("#{bin}/cc-auto check --json")
+    assert_equal "monitoring", JSON.parse(output).fetch("selectionMode")
+    assert_match "macOS quota monitoring", shell_output("#{bin}/cc-auto check")
   end
 end

@@ -1,17 +1,17 @@
 class CcAuto < Formula
   desc "Multi-account manager and quota router for Claude Code"
   homepage "https://github.com/cuongnguyengit/cc-auto-apt"
-  version "1.3.3"
+  version "1.4.0"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.3/cc-auto-macos-1.3.3-arm64.tar.gz"
-      sha256 "c7d600734bd7a7d77a86c8aca0a38eefcc5cdce97b82415bca171599f85ff012"
+      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.4.0/cc-auto-macos-1.4.0-arm64.tar.gz"
+      sha256 "1eaecc2553f1916d1e6981d49622c06d53e6e36583f885f28df70201f1957013"
     end
     on_intel do
-      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.3/cc-auto-macos-1.3.3-amd64.tar.gz"
-      sha256 "5ebcc31c1fd7a05923785037c96983ee109ce0b4343bdc7adf40ab7feea63ad7"
+      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.4.0/cc-auto-macos-1.4.0-amd64.tar.gz"
+      sha256 "801a4dd6da5b8212d76cd3470ea7b57cd77d503bdae4bd00e20fd39a8334f691"
     end
   end
 
@@ -50,5 +50,14 @@ class CcAuto < Formula
     output = shell_output("#{bin}/cc-auto check --json")
     assert_equal "monitoring", JSON.parse(output).fetch("selectionMode")
     assert_match "macOS quota monitoring", shell_output("#{bin}/cc-auto check")
+    fixture = testpath/"home/.claude-accounts/profiles/detail-fixture"
+    fixture.mkpath
+    (fixture/".claude.json").write <<~JSON
+      {"oauthAccount":{"emailAddress":"fixture@example.invalid","displayName":"Fixture Person","accessToken":"MUST_NOT_APPEAR"}}
+    JSON
+    output = shell_output("#{bin}/cc-account detail detail-fixture --json")
+    assert_equal "fixture@example.invalid", JSON.parse(output).fetch("email")
+    assert_equal "local_cache", JSON.parse(output).fetch("source")
+    refute_includes output, "MUST_NOT_APPEAR"
   end
 end

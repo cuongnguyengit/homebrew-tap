@@ -1,17 +1,17 @@
 class CcAuto < Formula
   desc "Multi-account manager and quota router for Claude Code"
   homepage "https://github.com/cuongnguyengit/cc-auto-apt"
-  version "1.3.2"
+  version "1.3.3"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.2/cc-auto-macos-1.3.2-arm64.tar.gz"
-      sha256 "f9f5d7c123d36b8fda6a1d83a3d2590760ec9e98adf65cc835203e68e7465f37"
+      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.3/cc-auto-macos-1.3.3-arm64.tar.gz"
+      sha256 "c7d600734bd7a7d77a86c8aca0a38eefcc5cdce97b82415bca171599f85ff012"
     end
     on_intel do
-      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.2/cc-auto-macos-1.3.2-amd64.tar.gz"
-      sha256 "09bfe6aa8a054896f96f67dfe9704e848e4b798dee35930ddf3fe705dc350411"
+      url "https://github.com/cuongnguyengit/cc-auto-apt/releases/download/v1.3.3/cc-auto-macos-1.3.3-amd64.tar.gz"
+      sha256 "5ebcc31c1fd7a05923785037c96983ee109ce0b4343bdc7adf40ab7feea63ad7"
     end
   end
 

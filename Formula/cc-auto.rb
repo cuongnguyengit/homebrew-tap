@@ -47,7 +47,7 @@ class CcAuto < Formula
     assert_path_exists testpath/"home/.config/claude-accounts/accounts.sh"
     assert_equal version.to_s, shell_output("#{testpath}/home/.local/bin/cc-auto --version").strip
     ENV["CLAUDE_ACCOUNTS_ROOT"] = (testpath/"home/.claude-accounts").to_s
-warmup = JSON.parse(shell_output("#{bin}/cc-auto warmup status --json"))
+    warmup = JSON.parse(shell_output("#{bin}/cc-auto warmup status --json"))
     assert_equal false, warmup.fetch("config").fetch("enabled")
     assert_equal ["05:00", "10:00", "15:00"], warmup.fetch("config").fetch("times")
     assert_equal 3, warmup.fetch("nextSlots").length
